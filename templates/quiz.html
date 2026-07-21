@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Credit Decision Quiz{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='quiz_style.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="game-wrapper">
+  <div class="game-container">
+    <h1>🧠 What Would You Do?</h1>
+    <p class="instructions">Make smart credit decisions and see how they affect your score.</p>
+
+    <div id="score">Current Credit Score: <span id="creditScore">700</span> | Highest Credit Score Achieved: <span
+        id="highScore">700</span></div>
+
+    <div id="scenarioBox">
+      <p id="scenarioText"></p>
+      <div class="buttons">
+        <button class="choice-btn" onclick="chooseAnswer(true)">Yes</button>
+        <button class="choice-btn" onclick="chooseAnswer(false)">No</button>
+      </div>
+    </div>
+
+    <div id="feedback"></div>
+
+    <button id="nextBtn" onclick="nextScenario()">Next Scenario</button>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='quiz_script.js') }}"></script>
+{% endblock %}

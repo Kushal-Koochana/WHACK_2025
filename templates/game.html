@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block title %}Credit Score Game{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='game_style.css') }}">
+{% endblock %}
+
+{% block content %}
+<div style="display:none;">
+    <img id="carLoans" src="{{ url_for('static', filename='icons/carLoans.png') }}">
+    <img id="debtPayoff" src="{{ url_for('static', filename='icons/debtPayoff.png') }}">
+    <img id="default" src="{{ url_for('static', filename='icons/default.png') }}">
+    <img id="highCreditUtilisation" src="{{ url_for('static', filename='icons/highCreditUtilisation.png') }}">
+    <img id="lowCreditUtilisation" src="{{ url_for('static', filename='icons/lowCreditUtilisation.png') }}">
+    <img id="missedPayment" src="{{ url_for('static', filename='icons/missedPayment.png') }}">
+    <img id="newCredit" src="{{ url_for('static', filename='icons/newCredit.png') }}">
+    <img id="onTimePayment" src="{{ url_for('static', filename='icons/onTimePayment.png') }}">
+</div>
+
+<div class="scale-container">
+    <div class="container-fluid p-0">
+        <div class="game-wrapper">
+            <div class="legend-panel">
+                <h4>Game Legend</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Symbol</th>
+                            <th>Effect</th>
+                            <th>Lesson</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>On-time Payment</td>
+                            <td>💵</td>
+                            <td class="positive-points">+20 points</td>
+                            <td>Paying on time improves credit</td>
+                        </tr>
+                        <tr>
+                            <td>Low Credit Utilisation</td>
+                            <td>💳</td>
+                            <td class="positive-points">+15 points</td>
+                            <td>Keeping card balance low helps score</td>
+                        </tr>
+                        <tr>
+                            <td>Car Loan Payment</td>
+                            <td>🚗</td>
+                            <td class="positive-points">+10 points</td>
+                            <td>Paying off installment loans helps credit mix</td>
+                        </tr>
+                        <tr>
+                            <td>Debt Payoff</td>
+                            <td>📜</td>
+                            <td class="positive-points">+25 points</td>
+                            <td>Paying off balances boosts credit</td>
+                        </tr>
+                        <tr>
+                            <td>Missed Payment</td>
+                            <td>⏰</td>
+                            <td class="negative-points">−30 points</td>
+                            <td>Late payments hurt credit</td>
+                        </tr>
+                        <tr>
+                            <td>Maxed-Out Card</td>
+                            <td>🔥</td>
+                            <td class="negative-points">−25 points</td>
+                            <td>Using too much credit lowers your score</td>
+                        </tr>
+                        <tr>
+                            <td>New Credit Inquiry</td>
+                            <td>🔎</td>
+                            <td class="negative-points">−10 points</td>
+                            <td>Too many new applications can hurt</td>
+                        </tr>
+                        <tr>
+                            <td>Loan Default</td>
+                            <td>💣</td>
+                            <td class="negative-points">−50 points</td>
+                            <td>Defaulting ruins your score</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <canvas id="gameCanvas" width="900" height="575"></canvas>
+
+            <div class="info-panel">
+                <div class="score-display">
+                    <div class="score-label">Score</div>
+                    <div class="score-value" id="score">0</div>
+                </div>
+                <div class="high-score">
+                    <div class="score-label">High Score</div>
+                    <div class="high-score-value" id="highScore">0</div>
+                </div>
+                <div class="controls">
+                    <p><strong>Controls:</strong></p>
+                    <p>Arrow Keys or WASD</p>
+                    <p>Space to Pause/Resume</p>
+                </div>
+                <div class="button-group">
+                    <button class="start-btn" id="startBtn">Start Game</button>
+                    <button class="reset-btn" id="resetBtn">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="game-over" id="gameOverModal">
+    <h2>Game Over!</h2>
+    <p id="finalScore">Score: 0</p>
+    <button class="start-btn" onclick="location.reload()">Play Again</button>
+</div>
+
+<div class="credit-info" id="creditInfoModal">
+    <h2 id="creditInfoTitle"></h2>
+    <br>
+    <p id="creditInfoDetail"></p>
+    <br>
+    <button class="start-btn" onclick="resume()">Continue</button>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='game_script.js') }}"></script>
+{% endblock %}

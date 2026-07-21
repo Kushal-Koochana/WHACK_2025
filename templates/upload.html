@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Contract Consultant{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='upload_style.css') }}">
+{% endblock %}
+
+{% block content %}
+<div id="loadingScreen" class="loading-screen">
+    <div class="loader"></div>
+    <div class="loading-text">Processing...</div>
+</div>
+
+{% if response %}
+<div id="displaySection" class="display-section">
+    <div class="container mt-4 page-header">
+        <button class="back-btn" id="backBtn">← Back to Upload</button>
+        <h1>PDF Analyser Results</h1>
+        <p>Detailed analysis of your uploaded contract</p>
+    </div>
+
+    <div class="floating-box">
+        <div class="box-content">
+            <div class="box-section flex-1">
+                <h3>Section 1 - PDF Viewer</h3>
+                <div class="pdf-viewer-container">
+                    <iframe src="{{ url_for('uploaded_file', filename=pdf_filename) }}" type="application/pdf"
+                        width="100%" height="600px" class="pdf-viewer">
+                    </iframe>
+                    <div class="pdf-fallback">
+                        <p>Your browser doesn't support PDF viewing. <a
+                                href="{{ url_for('uploaded_file', filename=pdf_filename) }}" target="_blank">Click here
+                                to download the PDF</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="box-section flex-1">
+                <div class="subsection">
+                    <h1>Client (You)</h1>
+                    <p class="score-percentage">{{ response["part_1"] }}%</p>
+                    <h1>Other Party (Company)</h1>
+                    <p class="score-percentage">{{ response["part_2"] }}%</p>
+                </div>
+                <div class="horizontal-divider"></div>
+                <div class="subsection">
+                    <h1>Explanation</h1>
+                    <p class="explanation-text">{{ response["part_3"] }}</p>
+                    <h1>Improvements</h1>
+                    <ul class="improvements-list">
+                        {% for improvement in response["part_4"] %}
+                        <li>{{ improvement }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div id="uploadSection" class="upload-section">
+    <div class="content-wrapper">
+        <div class="upload-container">
+            <h1>Upload File</h1>
+            <p class="subtitle">Select or drag a file to upload</p>
+
+            {% if error %}
+            <div class="upload-error">{{ error }}</div>
+            {% endif %}
+
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">📄</div>
+                <div class="upload-text">Click to browse or drag file here</div>
+                <div class="upload-hint">Supports any file type</div>
+            </div>
+
+            <form method="post" action="/submit" enctype="multipart/form-data">
+                <input type="file" name="file" id="fileInput">
+
+                <div class="file-info" id="fileInfo">
+                    <button type="button" class="remove-file-btn" id="removeFileBtn">×</button>
+                    <div class="file-name" id="fileName"></div>
+                    <div class="file-size" id="fileSize"></div>
+                </div>
+
+                <input type="submit" value="Upload" class="upload-btn" id="uploadBtn" disabled>
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script type="text/javascript" src="{{ url_for('static', filename='upload_script.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Cash Flow Tool — Enhanced Entry System{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='cash-flow-tracker_style.css') }}">
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@2.2.1"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-4">
+  <h2>Cash Flow Analysis</h2>
+
+  <form id="cashForm">
+    <input type="date" id="date" required>
+    <select id="itemDropdown" required style="min-width:250px;">
+      <option value="">-- Select Item --</option>
+      <option value="__add_new__">+ Add New Item</option>
+    </select>
+    <button type="submit" id="addEntryBtn">Add Entry</button>
+  </form>
+
+  <!-- Modal for adding new items -->
+  <div id="newItemModal">
+    <div class="modal-box">
+      <h3>Add New Item</h3>
+      <form id="newItemForm">
+        <div style="margin-bottom:16px;">
+          <label class="modal-label">Description</label>
+          <input type="text" id="newItemDesc" placeholder="e.g., Salary, Coffee, Rent" required style="width:100%;">
+        </div>
+        <div style="margin-bottom:16px;">
+          <label class="modal-label">Type</label>
+          <select id="newItemType" required style="width:100%;">
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+          </select>
+        </div>
+        <div style="margin-bottom:16px;">
+          <label class="modal-label">Amount</label>
+          <input type="number" id="newItemAmount" placeholder="0.00" step="0.01" required style="width:100%;">
+        </div>
+        <div style="margin-bottom:24px;">
+          <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+            <input type="checkbox" id="newItemRepeat" style="width:18px; height:18px;">
+            <span style="font-weight:600;">Save as repeating item</span>
+          </label>
+        </div>
+        <div style="display:flex; gap:12px; justify-content:flex-end;">
+          <button type="button" id="cancelItemBtn">Cancel</button>
+          <button type="submit" id="saveItemBtn">Save Item</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- DATE RANGE CONTROLS -->
+  <div style="margin-top:6px; margin-bottom:18px;">
+    <div class="d-flex align-items-center" style="gap:8px;">
+      <label class="mb-0">Start: <input type="date" id="startDate"></label>
+      <label class="mb-0">End: <input type="date" id="endDate"></label>
+      <button id="applyFilterBtn" type="button" class="btn filter-btn">Apply Filter</button>
+    </div>
+  </div>
+
+  <!-- SUMMARY + CHARTS -->
+  <div class="summary-container">
+    <div class="summary">
+      <p>Total Income: $<span id="totalIncome">0</span></p>
+      <p>Total Expenses: $<span id="totalExpenses">0</span></p>
+      <p>Net Cash Flow: $<span id="netFlow">0</span></p>
+    </div>
+
+    <div class="charts-container">
+      <div class="chart-box" style="flex:1; min-width:300px;">
+        <h3>Historical Net Cash Flow</h3>
+        <canvas id="netFlowChart"></canvas>
+      </div>
+
+      <div class="chart-box" style="flex:1; min-width:300px;">
+        <h3>Cash Flow by Category</h3>
+        <canvas id="cashFlowPie"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <table class="cash-table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Amount</th>
+        <th>Type</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="entryTable"></tbody>
+  </table>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='cash-flow-tracker_script.js') }}"></script>
+{% endblock %}

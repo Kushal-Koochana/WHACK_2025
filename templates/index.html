@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}JAK - Financial Literacy Platform{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='index_style.css') }}">
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 hero-content">
+                <h1>Master Your Financial Future</h1>
+                <p>Empower yourself with smart tools for contract analysis, cash flow management, and credit education.
+                    Take control of your finances today.</p>
+                <div>
+                    <a href="/signup" class="btn btn-primary-custom">Get Started Free</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Features Section -->
+<section class="main-features" id="features">
+    <div class="container">
+        <div class="section-title">
+            <h2>Choose Your Tool</h2>
+            <p>Four powerful features to build your financial confidence</p>
+        </div>
+        <div class="main-features-grid">
+            <a href="{{ url_for('game')}}" class="main-feature-box">
+                <span class="main-feature-icon">🎮</span>
+                <h3>Credit Score Game</h3>
+                <p>Learn about credit through an interactive snake game that teaches financial decisions</p>
+            </a>
+
+            <a href="{{ url_for('cashflow')}}" class="main-feature-box">
+                <span class="main-feature-icon">💰</span>
+                <h3>Cash Flow Manager</h3>
+                <p>Track income and expenses with visual analytics and insights</p>
+            </a>
+
+            <a href="{{ url_for('contractconsultant')}}" class="main-feature-box">
+                <span class="main-feature-icon">📄</span>
+                <h3>Contract Consultant</h3>
+                <p>AI-powered contract analysis to understand terms and fairness</p>
+            </a>
+
+            <a href="{{ url_for('quiz')}}" class="main-feature-box">
+                <span class="main-feature-icon">💳</span>
+                <h3>Credit Decision Quiz</h3>
+                <p>Test your knowledge in real-life scenarios involving credit</p>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer" id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h5 class="mb-3">JAK</h5>
+                <p>Empowering financial literacy through innovative technology and education.</p>
+            </div>
+            <div class="col-md-4">
+                <h5 class="mb-3">Quick Links</h5>
+                <ul class="footer-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="/signup">Sign Up</a></li>
+                    <li><a href="/login">Login</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5 class="mb-3">Contact</h5>
+                <ul class="footer-links">
+                    <li><a href="mailto:support@jak.com">support@jak.com</a></li>
+                    <li><a href="#">Help Center</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 JAK Financial Platform. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='index_script.js') }}"></script>
+{% endblock %}
