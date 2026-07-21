@@ -762,7 +762,7 @@ You are welcome to use, modify and adapt the code for educational purposes in ac
 
 Developed by **Josh B, Josh C, Aaron G, Kushal K**.
 
-GitHub: https://github.com/Joshua-Cullen
+GitHub: [https://github.com/Kushal-Koochana/WHACK_2025]
 
 ---
 
