@@ -1,0 +1,63 @@
+# Environment variables and secrets
+.env
+.env.local
+.env.*
+.webassets-cache
+
+# Python compilation and caching artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+bin/
+lib/
+include/
+
+# Database (SQLite via Flask-SQLAlchemy)
+# Flask-SQLAlchemy resolves relative sqlite:/// URIs into an auto-created
+# instance/ folder at the project root - this ignores that folder and any
+# stray .db files elsewhere so database.db is never committed.
+instance/
+*.db
+*.sqlite3
+*.db-journal
+*.db-shm
+*.db-wal
+
+# User Uploads
+# This ignores all files inside the uploads directory, 
+# but allows the uploads folder itself to be tracked if it contains a .gitkeep file.
+uploads/*
+!uploads/.gitkeep
+
+# Node.js and asset builds (just in case)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Operating System specific files
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# IDEs and Editor configurations
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
