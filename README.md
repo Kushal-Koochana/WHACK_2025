@@ -152,6 +152,7 @@ Before running the project, ensure the following software is installed.
 ## Software Requirements
 
 * Python 3.10 or later
+* [Poetry](https://python-poetry.org/) 2.4.3 or later (dependency & virtual environment manager)
 * Git
 * A modern web browser
 * A Google Gemini API key
@@ -169,31 +170,25 @@ cd WHACK25
 
 ---
 
-## 2. Create a virtual environment
-
-macOS / Linux
+## 2. Install Poetry (if you don't already have it)
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
+pip install poetry==2.4.3
 ```
 
-Windows
-
-```bash
-python -m venv .venv
-.venv\Scripts\activate
-```
+See the [official Poetry installation guide](https://python-poetry.org/docs/#installation) for alternative install methods.
 
 ---
 
 ## 3. Install project dependencies
 
 ```bash
-pip install -r requirements.txt
+poetry install
 ```
 
-This installs Flask along with Flask-SQLAlchemy/SQLAlchemy, which the app uses as its database layer.
+This reads `pyproject.toml` / `poetry.lock`, creates an isolated virtual environment, and installs Flask along with Flask-SQLAlchemy/SQLAlchemy (which the app uses as its database layer) and all other pinned dependencies.
+
+To run commands inside the virtual environment, prefix them with `poetry run` (e.g. `poetry run python app.py`)
 
 ---
 
@@ -216,7 +211,7 @@ Your `.env` file should **never** be committed to Git.
 ## 5. Create the database
 
 ```bash
-python databaseSetup.py
+poetry run python databaseSetup.py
 ```
 
 This uses Flask-SQLAlchemy's `db.create_all()` to build all tables defined in `models.py`. By Flask-SQLAlchemy convention, the SQLite file is created at `instance/database.db` (auto-created on first run, and git-ignored).
@@ -226,7 +221,7 @@ This uses Flask-SQLAlchemy's `db.create_all()` to build all tables defined in `m
 ## 6. Run the application
 
 ```bash
-python app.py
+poetry run python app.py
 ```
 
 The application will be available at:
@@ -264,7 +259,8 @@ JAK/
 ├── databaseDelete.py               # Development database reset utility
 ├── gemini.py                       # Google Gemini API integration
 ├── pdfHighlighting.py              # PDF annotation engine using PyMuPDF
-├── requirements.txt                # Project dependencies
+├── pyproject.toml                  # Poetry project metadata & dependencies
+├── poetry.lock                     # Locked, reproducible dependency versions
 ├── .gitignore                      # Git exclusions
 ├── instance/                       # Auto-created by Flask-SQLAlchemy; holds database.db (git-ignored)
 ├── uploads/                        # Uploaded and annotated PDF files
@@ -407,7 +403,7 @@ All child tables reference `users.user_id` with `ON DELETE CASCADE`, so deleting
 The database is automatically created using:
 
 ```bash
-python databaseSetup.py
+poetry run python databaseSetup.py
 ```
 
 This calls `db.create_all()` against the models in `models.py`. By Flask-SQLAlchemy's convention, the SQLite file lives at `instance/database.db`, which is auto-created and git-ignored.
@@ -415,7 +411,7 @@ This calls `db.create_all()` against the models in `models.py`. By Flask-SQLAlch
 For development purposes, database contents can be reset (all rows deleted, tables kept) using:
 
 ```bash
-python databaseDelete.py
+poetry run python databaseDelete.py
 ```
 
 > **Note:** `databaseDelete.py` should only be used in development, as it removes stored data.
